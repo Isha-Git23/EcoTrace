@@ -1,0 +1,16 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "globals": {
+        "BigInt": "readonly"
+    },
+    "extends": [
+        "react-app",
+        "eslint:recommended"
+    ],
+    "rules": {
+        "no-undef": "warn"
+    }
+}
