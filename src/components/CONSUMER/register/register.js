@@ -75,7 +75,7 @@ const ConsumerRegister = () => {
 
     const register = () => {
         if (validateForm()) {
-            axios.post("http://localhost:9002/CONSUMER/register", user)
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/CONSUMER/register`, user)
                 .then(res => {
                     if (res.data.success) {
                         Swal.fire({
