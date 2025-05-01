@@ -72,7 +72,7 @@ const Register = () => {
 
     const register = () => {
         if (validateForm()) {
-            axios.post("http://localhost:9002/FARMER/register", user)
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/FARMER/register`, user)
                 .then(res => {
                     if (res.data.success) {
                         Swal.fire({
