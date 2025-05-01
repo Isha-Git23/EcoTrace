@@ -58,7 +58,7 @@ const ConsumerLoginpage = ({ setLoginUser }) => {
   const login = async () => {
     if (validateForm()) {
       try {
-        const res = await axios.post("http://localhost:9002/CONSUMER/login", user);
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/CONSUMER/login`, user);
 
 
         if (res.data.success) {
