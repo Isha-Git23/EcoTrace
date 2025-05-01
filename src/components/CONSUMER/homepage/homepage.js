@@ -245,7 +245,7 @@ const ConsumerHomepage = ({ setLoginUser }) => {
                                                     <div className="qr-code-container">
                                                         <p><i className="fa-solid fa-qrcode"></i> Scan to view Product Journey:</p>
                                                         <QRCodeSVG
-                                                            value={`http://192.168.213.80:3000/CONSUMER/product-journey/${detail.productId}`}
+                                                            value={`https://eco-trace-n352.vercel.app/CONSUMER/product-journey/${detail.productId}`}
                                                             size={128}
                                                             bgColor="#ffffff"
                                                             fgColor="#000000"
