@@ -75,7 +75,7 @@ const RetailorRegister = () => {
 
     const register = () => {
         if (validateForm()) {
-            axios.post("http://localhost:9002/RETAILOR/register", user)
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/RETAILOR/register`, user)
                 .then(res => {
                     if (res.data.success) {
                         Swal.fire({
