@@ -73,7 +73,7 @@ const DistributorRegister = () => {
 
     const register = () => {
         if (validateForm()) {
-            axios.post("http://localhost:9002/DISTRIBUTOR/register", user)
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/DISTRIBUTOR/register`, user)
                 .then(res => {
                     if (res.data.success) {
                         Swal.fire({
