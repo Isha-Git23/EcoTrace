@@ -144,7 +144,7 @@ function Homepage({ setLoginUser }) {
         console.log("FormData Key:", key, "Value:", value);
       }
 
-      const response = await fetch("http://localhost:9002/api/farmerproducts", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/farmerproducts`, {
         method: "POST",
         body: formDataToSend, // No need for headers with FormData
       });
@@ -159,13 +159,13 @@ function Homepage({ setLoginUser }) {
       }
       const updatedProduct = {
         ...savedProduct,
-        imageUrl: `http://localhost:9002/uploads/${savedProduct.imageUrl.split('/').pop()}`,
+        imageUrl: `${process.env.REACT_APP_BACKEND_URL}/uploads/${savedProduct.imageUrl.split('/').pop()}`,
 
       };
 
       console.log("Final Product:", updatedProduct);
 
-      savedProduct.imageUrl = `http://localhost:9002/uploads/${savedProduct.imageUrl.split('/').pop()}`;
+      savedProduct.imageUrl = `${process.env.REACT_APP_BACKEND_URL}/uploads/${savedProduct.imageUrl.split('/').pop()}`;
 
 
       const updatedDetails = [...(JSON.parse(sessionStorage.getItem("farmerInsertedDetails")) || []), savedProduct];
