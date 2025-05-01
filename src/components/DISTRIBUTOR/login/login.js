@@ -58,7 +58,7 @@ const DistributorLoginpage = ({ setLoginUser }) => {
   const login = async () => {
     if (validateForm()) {
       try {
-        const res = await axios.post("http://localhost:9002/DISTRIBUTOR/login", user);
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/DISTRIBUTOR/login`, user);
 
 
         if (res.data.success) {
