@@ -90,7 +90,7 @@ const DistributorHomepage = ({ setLoginUser }) => {
             }
 
 
-            const response = await fetch("http://localhost:9002/api/distproducts", {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/distproducts`, {
                 method: "POST",
                 body: formDataToSend, // No need for headers with FormData
             });
@@ -105,12 +105,12 @@ const DistributorHomepage = ({ setLoginUser }) => {
             }
             const updatedProduct = {
                 ...savedProduct,
-                imageUrl: `http://localhost:9002/uploads/${savedProduct.imageUrl.split('/').pop()}`,
+                imageUrl: `${process.env.REACT_APP_BACKEND_URL}/uploads/${savedProduct.imageUrl.split('/').pop()}`,
             };
 
 
             console.log("Final Product:", updatedProduct);
-            savedProduct.imageUrl = `http://localhost:9002/uploads/${savedProduct.imageUrl.split('/').pop()}`;
+            savedProduct.imageUrl = `${process.env.REACT_APP_BACKEND_URL}/${savedProduct.imageUrl.split('/').pop()}`;
 
             // const updatedDetails = [...insertedDetails, savedProduct];
             // setInsertedDetails(updatedDetails);
