@@ -97,7 +97,7 @@ const RetailorHomepage = ({ setLoginUser }) => {
                 console.log("FormData Key:", key, "Value:", value);
             }
 
-            const response = await fetch("http://localhost:9002/api/retproducts", {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/retproducts`, {
                 method: "POST",
                 body: formDataToSend, // No need for headers with FormData
             });
@@ -112,11 +112,11 @@ const RetailorHomepage = ({ setLoginUser }) => {
             }
             const updatedProduct = {
                 ...savedProduct,
-                imageUrl: `http://localhost:9002/uploads/${savedProduct.imageUrl.split('/').pop()}`,
+                imageUrl: `${process.env.REACT_APP_BACKEND_URL}/uploads/${savedProduct.imageUrl.split('/').pop()}`,
             };
 
             console.log("Final Product:", updatedProduct);
-            savedProduct.imageUrl = `http://localhost:9002/uploads/${savedProduct.imageUrl.split('/').pop()}`;
+            savedProduct.imageUrl = `${process.env.REACT_APP_BACKEND_URL}/uploads/${savedProduct.imageUrl.split('/').pop()}`;
 
             // const updatedDetails = [...insertedDetails, savedProduct];
             // setInsertedDetails(updatedDetails);
