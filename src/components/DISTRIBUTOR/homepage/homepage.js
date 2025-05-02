@@ -13,8 +13,7 @@ const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
 const productStatusMapping = ["Created", "Distributed", "Retailed"];
 const roleMapping = ["Farmer", "Distributor", "Retailer"];
-
-// const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Distributor";
+const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Distributor";
 
 const DistributorHomepage = ({ setLoginUser }) => {
 
@@ -22,7 +21,7 @@ const DistributorHomepage = ({ setLoginUser }) => {
         sessionStorage.getItem("activeTab") || "insertDetails"
     );
 
-    const [formData] = useState({
+    const [formData, setFormData] = useState({
         productId: '',
         name: '',
         location: '',
@@ -36,26 +35,17 @@ const DistributorHomepage = ({ setLoginUser }) => {
     const [productJourney, setProductJourney] = useState(null);
     const [journeyStatus, setJourneyStatus] = useState("");
     const [currentRole, setCurrentRole] = useState("");
-     const [username, setUsername] = useState(""); // ⬅️ Add this
     const navigate = useNavigate();
-   
 
-    // username
-     useEffect(() => {
-    const user = sessionStorage.getItem("user");
-    if (!user) {
-      navigate("/DISTRIBUTOR/login", { replace: true });
-    } else {
-      const userObj = JSON.parse(user); // Convert back to object
-      if (userObj && userObj.name) {
-        setUsername(userObj.name); // ⬅️ Set the username
-      }
-      const storedDetails = sessionStorage.getItem("distributorInsertedDetails");
-      if (storedDetails) {
-        setInsertedDetails(JSON.parse(storedDetails));
-      }
-    }
-  }, [navigate]);
+    useEffect(() => {
+        const storedDetails = sessionStorage.getItem("distributorInsertedDetails");
+        if (storedDetails) setInsertedDetails(JSON.parse(storedDetails));
+    }, []);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
 
     // for image
     const handleImageChange = (e) => {
@@ -120,7 +110,7 @@ const DistributorHomepage = ({ setLoginUser }) => {
 
 
             console.log("Final Product:", updatedProduct);
-            savedProduct.imageUrl = `${process.env.REACT_APP_BACKEND_URL}/${savedProduct.imageUrl.split('/').pop()}`;
+            savedProduct.imageUrl = `${process.env.REACT_APP_BACKEND_URL}/uploads/${savedProduct.imageUrl.split('/').pop()}`;
 
             // const updatedDetails = [...insertedDetails, savedProduct];
             // setInsertedDetails(updatedDetails);
@@ -136,7 +126,7 @@ const DistributorHomepage = ({ setLoginUser }) => {
             // ✅ Show success popup instead of alert
             Swal.fire({
                 title: "Success!",
-                text: "Product details added successfully to Blockchain !",
+                text: "Product details added successfully to Blockchain & MongoDB!",
                 icon: "success",
                 confirmButtonText: "OK",
             }).then(() => {
