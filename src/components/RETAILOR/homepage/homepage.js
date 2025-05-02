@@ -64,7 +64,7 @@ const RetailorHomepage = ({ setLoginUser }) => {
             const contract = new ethers.Contract(contractAddress, contractABI, wallet);
 
 
-            const transaction = await contract.RetailorInsertDetails(
+            const transaction = await contract.RetailerInsertDetails(
                 formData.productId,
                 formData.name,
                 formData.location,
