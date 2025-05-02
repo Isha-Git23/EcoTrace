@@ -13,8 +13,8 @@ const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
 const productStatusMapping = ["Created", "Distributed", "Retailed"];
 const roleMapping = ["Farmer", "Distributor", "Retailer"];
-// const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Retailor";
-const [username, setUsername] = useState(""); // ⬅️ Add this
+const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Retailor";
+// const [username, setUsername] = useState(""); // ⬅️ Add this
 
 const RetailorHomepage = ({ setLoginUser }) => {
 
@@ -39,21 +39,33 @@ const RetailorHomepage = ({ setLoginUser }) => {
     const navigate = useNavigate();
 
   // for username
-  useEffect(() => {
-    const user = sessionStorage.getItem("user");
-    if (!user) {
-      navigate("/RETAILOR/login", { replace: true });
-    } else {
-      const userObj = JSON.parse(user); // Convert back to object
-      if (userObj && userObj.name) {
-        setUsername(userObj.name); // ⬅️ Set the username
-      }
-      const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
-      if (storedDetails) {
-        setInsertedDetails(JSON.parse(storedDetails));
-      }
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const user = sessionStorage.getItem("user");
+  //   if (!user) {
+  //     navigate("/RETAILOR/login", { replace: true });
+  //   } else {
+  //     const userObj = JSON.parse(user); // Convert back to object
+  //     if (userObj && userObj.name) {
+  //       setUsername(userObj.name); // ⬅️ Set the username
+  //     }
+  //     const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
+  //     if (storedDetails) {
+  //       setInsertedDetails(JSON.parse(storedDetails));
+  //     }
+  //   }
+  // }, [navigate]);
+        useEffect(() => {
+        const user = sessionStorage.getItem("user");
+
+        if (!user) {
+            navigate("/RETAILOR/login", { replace: true });
+        } else {
+            const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
+            if (storedDetails) {
+                setInsertedDetails(JSON.parse(storedDetails));
+            }
+        }
+    }, [navigate]);
 
 
 
