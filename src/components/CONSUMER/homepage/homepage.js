@@ -8,7 +8,7 @@ import ReviewModal from "./ReviewModal";
 import { QRCodeSVG } from 'qrcode.react';
 
 
-// const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Consumer";
+const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Consumer";
 
 const ConsumerHomepage = ({ setLoginUser }) => {
     const [activeSection, setActiveSection] = useState(
@@ -16,7 +16,7 @@ const ConsumerHomepage = ({ setLoginUser }) => {
     );
     const [formData, setFormData] = useState({ productId: '' });
     const [insertedDetails, setInsertedDetails] = useState([]);
-    const [username, setUsername] = useState("");
+
     const navigate = useNavigate();
 
     // const [showQR, setShowQR] = useState(false);
@@ -28,22 +28,18 @@ const ConsumerHomepage = ({ setLoginUser }) => {
         return JSON.parse(sessionStorage.getItem("productReviews")) || {};
     });
 
-  // for username
-  useEffect(() => {
-    const user = sessionStorage.getItem("user");
-    if (!user) {
-      navigate("/CONSUMER/login", { replace: true });
-    } else {
-      const userObj = JSON.parse(user); // Convert back to object
-      if (userObj && userObj.name) {
-        setUsername(userObj.name); // ⬅️ Set the username
-      }
-      const storedDetails = sessionStorage.getItem("consumerInsertedDetails");
-      if (storedDetails) {
-        setInsertedDetails(JSON.parse(storedDetails));
-      }
-    }
-  }, [navigate]);
+    useEffect(() => {
+        const user = sessionStorage.getItem("user");
+
+        if (!user) {
+            navigate("/CONSUMER/login", { replace: true });
+        } else {
+            const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
+            if (storedDetails) {
+                setInsertedDetails(JSON.parse(storedDetails));
+            }
+        }
+    }, [navigate]);
 
 
     const handleChange = (e) => {
