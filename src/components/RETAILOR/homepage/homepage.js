@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ethers } from "ethers";
 import contractArtifact from "./Supplychain.json";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import './DistHomepage.css';
+import './RetailorHomepage.css';
 import Swal from "sweetalert2";
 
 const contractABI = contractArtifact.abi;
