@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useMemo} from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from "sweetalert2";
@@ -74,7 +74,7 @@ const ConsumerHomepage = ({ setLoginUser }) => {
 
 
     const userInitials = useMemo(() => {
-        if (!username) return "F";
+        if (!username) return "C";
         const words = username.split(" ");
         return words.length > 1
             ? words[0][0].toUpperCase() + words[1][0].toUpperCase()
