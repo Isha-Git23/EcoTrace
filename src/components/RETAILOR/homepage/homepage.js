@@ -54,6 +54,7 @@ const RetailorHomepage = ({ setLoginUser }) => {
   //     }
   //   }
   // }, [navigate]);
+// 
         useEffect(() => {
         const user = sessionStorage.getItem("user");
 
