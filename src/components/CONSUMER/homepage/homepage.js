@@ -13,7 +13,7 @@ const ConsumerHomepage = ({ setLoginUser }) => {
     );
     const [formData, setFormData] = useState({ productId: '' });
     const [insertedDetails, setInsertedDetails] = useState([]);
-
+    const [username, setUsername] = useState(""); // ⬅️ Add this
     const navigate = useNavigate();
 
     // const [showQR, setShowQR] = useState(false);
@@ -25,18 +25,21 @@ const ConsumerHomepage = ({ setLoginUser }) => {
         return JSON.parse(sessionStorage.getItem("productReviews")) || {};
     });
 
-    useEffect(() => {
-        const user = sessionStorage.getItem("user");
-
-        if (!user) {
-            navigate("/CONSUMER/login", { replace: true });
-        } else {
-            const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
-            if (storedDetails) {
-                setInsertedDetails(JSON.parse(storedDetails));
-            }
-        }
-    }, [navigate]);
+  useEffect(() => {
+    const user = sessionStorage.getItem("user");
+    if (!user) {
+      navigate("/CONSUMER/login", { replace: true });
+    } else {
+      const userObj = JSON.parse(user); // Convert back to object
+      if (userObj && userObj.name) {
+        setUsername(userObj.name); // ⬅️ Set the username
+      }
+      const storedDetails = sessionStorage.getItem("consumerInsertedDetails");
+      if (storedDetails) {
+        setInsertedDetails(JSON.parse(storedDetails));
+      }
+    }
+  }, [navigate]);
 
 
     const handleChange = (e) => {
@@ -69,14 +72,14 @@ const ConsumerHomepage = ({ setLoginUser }) => {
         });
     };
 
-    const getInitials = (name) => {
-        if (!name) return "C";
-        const words = name.split(" ");
+
+    const userInitials = useMemo(() => {
+        if (!username) return "F";
+        const words = username.split(" ");
         return words.length > 1
             ? words[0][0].toUpperCase() + words[1][0].toUpperCase()
             : words[0][0].toUpperCase();
-    };
-    const userInitials = getInitials(username);
+    }, [username]);
 
     useEffect(() => {
         sessionStorage.setItem("activeTab", activeSection);
