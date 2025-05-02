@@ -13,7 +13,8 @@ const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
 const productStatusMapping = ["Created", "Distributed", "Retailed"];
 const roleMapping = ["Farmer", "Distributor", "Retailer"];
-const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Distributor";
+  const [username, setUsername] = useState(""); // ⬅️ Add this
+// const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Distributor";
 
 const DistributorHomepage = ({ setLoginUser }) => {
 
@@ -37,15 +38,22 @@ const DistributorHomepage = ({ setLoginUser }) => {
     const [currentRole, setCurrentRole] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const storedDetails = sessionStorage.getItem("distributorInsertedDetails");
-        if (storedDetails) setInsertedDetails(JSON.parse(storedDetails));
-    }, []);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
+    // username
+     useEffect(() => {
+    const user = sessionStorage.getItem("user");
+    if (!user) {
+      navigate("/FARMER/login", { replace: true });
+    } else {
+      const userObj = JSON.parse(user); // Convert back to object
+      if (userObj && userObj.name) {
+        setUsername(userObj.name); // ⬅️ Set the username
+      }
+      const storedDetails = sessionStorage.getItem("farmerInsertedDetails");
+      if (storedDetails) {
+        setInsertedDetails(JSON.parse(storedDetails));
+      }
+    }
+  }, [navigate]);
 
     // for image
     const handleImageChange = (e) => {
