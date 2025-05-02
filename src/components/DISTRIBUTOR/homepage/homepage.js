@@ -22,7 +22,7 @@ const DistributorHomepage = ({ setLoginUser }) => {
         sessionStorage.getItem("activeTab") || "insertDetails"
     );
 
-    const [formData, setFormData] = useState({
+    const [formData] = useState({
         productId: '',
         name: '',
         location: '',
