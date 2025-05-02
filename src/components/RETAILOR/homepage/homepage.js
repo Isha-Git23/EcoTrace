@@ -14,7 +14,6 @@ const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 const productStatusMapping = ["Created", "Distributed", "Retailed"];
 const roleMapping = ["Farmer", "Distributor", "Retailer"];
 const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Retailor";
-// const [username, setUsername] = useState(""); // ⬅️ Add this
 
 const RetailorHomepage = ({ setLoginUser }) => {
 
@@ -38,24 +37,7 @@ const RetailorHomepage = ({ setLoginUser }) => {
     const [currentRole, setCurrentRole] = useState("");
     const navigate = useNavigate();
 
-  // for username
-  // useEffect(() => {
-  //   const user = sessionStorage.getItem("user");
-  //   if (!user) {
-  //     navigate("/RETAILOR/login", { replace: true });
-  //   } else {
-  //     const userObj = JSON.parse(user); // Convert back to object
-  //     if (userObj && userObj.name) {
-  //       setUsername(userObj.name); // ⬅️ Set the username
-  //     }
-  //     const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
-  //     if (storedDetails) {
-  //       setInsertedDetails(JSON.parse(storedDetails));
-  //     }
-  //   }
-  // }, [navigate]);
-// 
-        useEffect(() => {
+    useEffect(() => {
         const user = sessionStorage.getItem("user");
 
         if (!user) {
@@ -152,7 +134,7 @@ const RetailorHomepage = ({ setLoginUser }) => {
             // ✅ Show success popup instead of alert
             Swal.fire({
                 title: "Success!",
-                text: "Product details added successfully to Blockchain!",
+                text: "Product details added successfully to Blockchain & MongoDB!",
                 icon: "success",
                 confirmButtonText: "OK",
             }).then(() => {
@@ -411,5 +393,4 @@ const RetailorHomepage = ({ setLoginUser }) => {
         </div>
     );
 }
-
 export default RetailorHomepage;
