@@ -1,11 +1,11 @@
-// import React from "react";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { ethers } from "ethers";
 import contractArtifact from "./Supplychain.json";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import './DistHomepage.css';
 import Swal from "sweetalert2";
-import './RetailorHomepage.css';
 
 const contractABI = contractArtifact.abi;
 const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
@@ -38,20 +38,9 @@ const RetailorHomepage = ({ setLoginUser }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const user = sessionStorage.getItem("user");
-
-        if (!user) {
-            navigate("/RETAILOR/login", { replace: true });
-        } else {
-            const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
-            if (storedDetails) {
-                setInsertedDetails(JSON.parse(storedDetails));
-            }
-        }
-    }, [navigate]);
-
-
-
+        const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
+        if (storedDetails) setInsertedDetails(JSON.parse(storedDetails));
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -65,6 +54,9 @@ const RetailorHomepage = ({ setLoginUser }) => {
             console.log("Image selected:", e.target.files[0].name);
         }
     };
+
+
+
     const handleAddProductDetails = async () => {
         try {
             const provider = new ethers.JsonRpcProvider(`https://polygon-mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_API_KEY}`);
@@ -72,7 +64,7 @@ const RetailorHomepage = ({ setLoginUser }) => {
             const contract = new ethers.Contract(contractAddress, contractABI, wallet);
 
 
-            const transaction = await contract.RetailerInsertDetails(
+            const transaction = await contract.RetailorInsertDetails(
                 formData.productId,
                 formData.name,
                 formData.location,
@@ -97,6 +89,7 @@ const RetailorHomepage = ({ setLoginUser }) => {
                 console.log("FormData Key:", key, "Value:", value);
             }
 
+
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/retproducts`, {
                 method: "POST",
                 body: formDataToSend, // No need for headers with FormData
@@ -115,6 +108,7 @@ const RetailorHomepage = ({ setLoginUser }) => {
                 imageUrl: `${process.env.REACT_APP_BACKEND_URL}/uploads/${savedProduct.imageUrl.split('/').pop()}`,
             };
 
+
             console.log("Final Product:", updatedProduct);
             savedProduct.imageUrl = `${process.env.REACT_APP_BACKEND_URL}/uploads/${savedProduct.imageUrl.split('/').pop()}`;
 
@@ -122,11 +116,9 @@ const RetailorHomepage = ({ setLoginUser }) => {
             // setInsertedDetails(updatedDetails);
             // sessionStorage.setItem("insertedDetails", JSON.stringify(updatedDetails));
 
-
             const updatedDetails = [...(JSON.parse(sessionStorage.getItem("retailorInsertedDetails")) || []), savedProduct];
             setInsertedDetails(updatedDetails);
             sessionStorage.setItem("retailorInsertedDetails", JSON.stringify(updatedDetails));
-
 
 
             // popup
@@ -148,8 +140,8 @@ const RetailorHomepage = ({ setLoginUser }) => {
             let errorMessage = "Transaction failed. Check console for details.";
 
             // Check if it's a known blockchain revert error
-            if (error.message.includes("Product ID already exists for Farmer role")) {
-                errorMessage = "Product ID already exists for this Farmer!";
+            if (error.message.includes("Product ID already exists for Retailor role")) {
+                errorMessage = "Product ID already exists for this Retailor!";
             }
 
             // Show popup with appropriate message
@@ -162,12 +154,8 @@ const RetailorHomepage = ({ setLoginUser }) => {
         }
     };
 
-    useEffect(() => {
-        document.body.classList.add('retailerbody');
-        return () => {
-            document.body.classList.remove('retailerbody');
-        };
-    }, []);
+
+
 
     const handleGetProductJourney = async () => {
         try {
@@ -210,9 +198,8 @@ const RetailorHomepage = ({ setLoginUser }) => {
         });
     };
 
-
     const getInitials = (name) => {
-        if (!name) return "R"; // Default to "R" for Retailer
+        if (!name) return "D";
         const words = name.split(" ");
         return words.length > 1
             ? words[0][0].toUpperCase() + words[1][0].toUpperCase()
@@ -223,12 +210,16 @@ const RetailorHomepage = ({ setLoginUser }) => {
         sessionStorage.setItem("activeTab", activeSection);
     }, [activeSection]);
 
+
+
+
     useEffect(() => {
         document.body.classList.add('retbody');
         return () => {
             document.body.classList.remove('retbody');
         };
     }, []);
+
 
     return (
         <div className="ret-homepage">
@@ -243,9 +234,11 @@ const RetailorHomepage = ({ setLoginUser }) => {
                         { key: "viewInsertedDetails", label: "View Products", icon: "fa-solid fa-eye" },
                         { key: "getProductJourney", label: "Get Product Journey", icon: "fa-solid fa-route" }
                     ].map(({ key, label, icon }) => (
-
-
-                        <li key={key} className={`ret-nav-item ${activeSection === key ? "active" : ""}`} onClick={() => setActiveSection(key)}>
+                        <li
+                            key={key}
+                            className={`ret-nav-item ${activeSection === key ? "active" : ""}`}
+                            onClick={() => setActiveSection(key)}
+                        >
                             <i className={icon}></i> {label}
                         </li>
                     ))}
@@ -253,42 +246,46 @@ const RetailorHomepage = ({ setLoginUser }) => {
                         <i className="fa-solid fa-sign-out-alt"></i> Logout
                     </li>
                 </ul>
+
             </div>
             <div className="ret-main-content">
                 {activeSection === "insertDetails" && (
                     <div className="ret-form-container">
-                        <h4>Insert Details:</h4>
-                        <form onSubmit={(e) => { e.preventDefault(); handleAddProductDetails(); }}>
-                            <div className="ret-form-grid">
-                                {Object.keys(formData).map((key) =>
-                                    key !== "imageUrl" ? (
-                                        <div key={key} className="ret-form-group">
-                                            <input
-                                                type={key.includes("Date") ? "date" : "text"}
-                                                placeholder={key}
-                                                name={key}
-                                                value={formData[key]}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                        </div>
-                                    ) : null
-                                )}
-                                <div className="ret-form-group image-upload">
-                                    <label>Upload Product Image:</label>
-                                    <input
-                                        id="imageInput"
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleImageChange} // ✅ Use the new function
-                                    />
+                        {/* Left Side - Form */}
+                        <div className="ret-form-section">
+                            <h4>Enter Product Details</h4>
+                            <form onSubmit={(e) => { e.preventDefault(); handleAddProductDetails(); }}>
+                                <div className="ret-form-grid">
+                                    {Object.keys(formData).map((key) =>
+                                        key !== "imageUrl" ? (
+                                            <div key={key} className="ret-form-group">
+                                                <input
+                                                    type={key.includes("Date") ? "date" : "text"}
+                                                    placeholder={key}
+                                                    name={key}
+                                                    value={formData[key]}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </div>
+                                        ) : null
+                                    )}
+                                    <div className="ret-form-group image-upload">
+                                        <label>Upload Product Image:</label>
+                                        <input id="imageInput" type="file" accept="image/*" onChange={handleImageChange} />
+                                    </div>
                                 </div>
-                            </div>
 
-                            <button className="ret-form-group-submit" id="submit" type="submit"> Insert Details</button>
+                                <button className="ret-form-group-submit" id="submit" type="submit">Insert Details</button>
 
-                        </form>
+                            </form>
+                        </div>
+
+                        {/* Right Side - Image Preview */}
+
                     </div>
+
+
                 )}
                 {activeSection === "viewInsertedDetails" && (
                     <div className="ret-details-container">
@@ -321,7 +318,6 @@ const RetailorHomepage = ({ setLoginUser }) => {
                         </div>
                     </div>
                 )}
-
                 {activeSection === "getProductJourney" && (
                     <div className="ret-journey-container">
                         <div className="journey-box">
@@ -393,4 +389,5 @@ const RetailorHomepage = ({ setLoginUser }) => {
         </div>
     );
 }
+
 export default RetailorHomepage;
