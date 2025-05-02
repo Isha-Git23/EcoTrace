@@ -180,7 +180,7 @@ const WelcomePage = () => {
             {/* Video Section */}
             <div className="video-wrapper">
               <video autoPlay muted loop playsInline>
-                <source src="/Farmervideo.mp4" type="video/mp4" />
+                <source src="/video.mp4" type="video/mp4" />
               </video>
             </div>
           </Container>
