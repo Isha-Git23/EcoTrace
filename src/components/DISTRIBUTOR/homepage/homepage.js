@@ -36,8 +36,9 @@ const DistributorHomepage = ({ setLoginUser }) => {
     const [productJourney, setProductJourney] = useState(null);
     const [journeyStatus, setJourneyStatus] = useState("");
     const [currentRole, setCurrentRole] = useState("");
+     const [username, setUsername] = useState(""); // ⬅️ Add this
     const navigate = useNavigate();
-    const [username, setUsername] = useState(""); // ⬅️ Add this
+   
 
     // username
      useEffect(() => {
