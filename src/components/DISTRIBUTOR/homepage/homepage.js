@@ -13,7 +13,7 @@ const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
 const productStatusMapping = ["Created", "Distributed", "Retailed"];
 const roleMapping = ["Farmer", "Distributor", "Retailer"];
-  const [username, setUsername] = useState(""); // ⬅️ Add this
+
 // const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Distributor";
 
 const DistributorHomepage = ({ setLoginUser }) => {
@@ -37,6 +37,7 @@ const DistributorHomepage = ({ setLoginUser }) => {
     const [journeyStatus, setJourneyStatus] = useState("");
     const [currentRole, setCurrentRole] = useState("");
     const navigate = useNavigate();
+    const [username, setUsername] = useState(""); // ⬅️ Add this
 
     // username
      useEffect(() => {
