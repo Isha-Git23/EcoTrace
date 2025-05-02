@@ -273,7 +273,7 @@ const WelcomePage = () => {
               </div>
               <div className="footer-bottom">
                 <AiOutlineCopyrightCircle />
-                <span> 2024 Eco Trace. All Rights Reserved.</span>
+                <span> 2025 Eco Trace. All Rights Reserved.</span>
               </div>
             </div>
 
