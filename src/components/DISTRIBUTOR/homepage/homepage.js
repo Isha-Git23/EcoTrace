@@ -42,13 +42,13 @@ const DistributorHomepage = ({ setLoginUser }) => {
      useEffect(() => {
     const user = sessionStorage.getItem("user");
     if (!user) {
-      navigate("/FARMER/login", { replace: true });
+      navigate("/DISTRIBUTOR/login", { replace: true });
     } else {
       const userObj = JSON.parse(user); // Convert back to object
       if (userObj && userObj.name) {
         setUsername(userObj.name); // ⬅️ Set the username
       }
-      const storedDetails = sessionStorage.getItem("farmerInsertedDetails");
+      const storedDetails = sessionStorage.getItem("distributorInsertedDetails");
       if (storedDetails) {
         setInsertedDetails(JSON.parse(storedDetails));
       }
