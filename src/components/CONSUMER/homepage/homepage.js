@@ -7,9 +7,6 @@ import './ConsumerHomepage.css';
 import ReviewModal from "./ReviewModal";
 import { QRCodeSVG } from 'qrcode.react';
 
-
-const username = JSON.parse(sessionStorage.getItem("user"))?.name || "Consumer";
-
 const ConsumerHomepage = ({ setLoginUser }) => {
     const [activeSection, setActiveSection] = useState(
         sessionStorage.getItem("activeTab") || "purchase"
