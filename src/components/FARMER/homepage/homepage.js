@@ -176,7 +176,7 @@ function Homepage({ setLoginUser }) {
       // ✅ Show success popup instead of alert
       Swal.fire({
         title: "Success!",
-        text: "Product details added successfully to Blockchain & MongoDB!",
+        text: "Product details added successfully to Blockchain!",
         icon: "success",
         confirmButtonText: "OK",
       }).then(() => {
