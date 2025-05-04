@@ -37,11 +37,19 @@ const RetailorHomepage = ({ setLoginUser }) => {
     const [currentRole, setCurrentRole] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
-        if (storedDetails) setInsertedDetails(JSON.parse(storedDetails));
-    }, []);
-
+        useEffect(() => {
+       const user = sessionStorage.getItem("user");
+     
+       if (!user) {
+         navigate("/RETAILOR/login", { replace: true });
+       } else {
+         const storedDetails = sessionStorage.getItem("retailorInsertedDetails");
+         if (storedDetails) {
+           setInsertedDetails(JSON.parse(storedDetails));
+         }
+       }
+     }, [navigate]);
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -198,8 +206,9 @@ const RetailorHomepage = ({ setLoginUser }) => {
         });
     };
 
+ 
     const getInitials = (name) => {
-        if (!name) return "D";
+        if (!name) return "R"; // Default to "R" for Retailer
         const words = name.split(" ");
         return words.length > 1
             ? words[0][0].toUpperCase() + words[1][0].toUpperCase()
@@ -209,7 +218,6 @@ const RetailorHomepage = ({ setLoginUser }) => {
     useEffect(() => {
         sessionStorage.setItem("activeTab", activeSection);
     }, [activeSection]);
-
 
 
 
